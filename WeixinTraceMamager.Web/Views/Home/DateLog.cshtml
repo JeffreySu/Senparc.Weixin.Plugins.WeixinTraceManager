@@ -68,6 +68,7 @@
     @{var i = 0;}
     @foreach (var item in Model.WeixinTraceItemList)
     {
+        var showMessage = false;//是否有特殊消息输出
         <tr class="@(item.IsException?"exception":"")">
             <td>
                 <strong>#@(++i)</strong> / @item.Line
@@ -80,6 +81,7 @@
             <td>
                 @if (!string.IsNullOrEmpty(item.Result.Url))
                 {
+                    showMessage = true;
                     <p>
                         <strong>URL：</strong>
                         @item.Result.Url
@@ -88,30 +90,43 @@
 
                 @if (!string.IsNullOrEmpty(item.Result.Result))
                 {
+                    showMessage = true;
                     <p>
                         <strong>返回结果：</strong>
                         @item.Result.Result
                     </p>
                 }
+              
 
                 @if (item.IsException)
                 {
+                    showMessage = true;
                     <p>
                         <strong>异常信息：</strong>
                         @item.Result.ExceptionMessage
                     </p>
                 }
-            </td>
-        </tr>
-        <tr class="@(item.IsException?"exception":"")">
-            <td colspan="7">
-                <a href="javascript:;" id="more_@i" data-i="@i">#@i 点击查看完整结果</a>
 
-                <p id="detail_@i" class="detail_result">
-                    @Html.Raw(item.Result.ToString())
-                </p>
+                @if (!showMessage)
+                {
+                    @Html.Raw(item.Result.ToString())//显示所有结果
+                }
             </td>
         </tr>
+
+        if (showMessage)
+        {
+            <tr class="@(item.IsException?"exception":"")">
+                <td colspan="7">
+                    <a href="javascript:;" id="more_@i" data-i="@i"><strong>#@i</strong> 点击查看完整结果</a>
+
+                    <p id="detail_@i" class="detail_result">
+                        @Html.Raw(item.Result.ToString())//显示所有结果
+                    </p>
+
+                </td>
+            </tr>
+        }
     }
 
 </table>

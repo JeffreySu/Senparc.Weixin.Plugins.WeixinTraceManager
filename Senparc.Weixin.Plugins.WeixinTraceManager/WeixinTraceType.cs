@@ -11,10 +11,10 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
     /// </summary>
     public enum WeixinTraceType
     {
-        Normal,
-        API,
-        PostRequest,
-        GetRequest,
-        Exception
+        Normal = 0,
+        API = 2,
+        PostRequest = 4,
+        GetRequest = 6,
+        Exception = 8
     }
 }
