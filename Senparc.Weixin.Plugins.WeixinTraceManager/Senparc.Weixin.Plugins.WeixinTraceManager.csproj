@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+    <Version>0.1.0</Version>
+    <AssemblyName>Senparc.Weixin.Plugins.WeixinTraceManager</AssemblyName>
+    <RootNamespace>Senparc.Weixin.Plugins.WeixinTraceManager</RootNamespace>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
