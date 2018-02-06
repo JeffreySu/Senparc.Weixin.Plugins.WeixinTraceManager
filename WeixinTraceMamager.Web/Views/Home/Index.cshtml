@@ -12,7 +12,7 @@
 <div class="row">
     <h2>日志列表</h2>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>日期</th>
@@ -20,13 +20,13 @@
         </thead>
         <tbody>
             @foreach (var item in Model.DateList)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(item, "DateLog", new { date = item })
-                    </td>
-                </tr>
-            }
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item, "DateLog", new { date = item })
+                </td>
+            </tr>
+    }
         </tbody>
     </table>
 
