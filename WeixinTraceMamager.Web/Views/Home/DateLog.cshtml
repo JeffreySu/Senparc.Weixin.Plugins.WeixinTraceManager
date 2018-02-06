@@ -4,33 +4,74 @@
     ViewBag.Title = "DataLog";
 }
 
+<style>
+    .detail_result {
+        display: none;
+        background: #d8d8d8;
+        padding:8px;
+    }
+</style>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('[id^=more_]').click(function () {
+                $(this).hide();
+                $('#detail_' + $(this).attr('data-i')).slideDown();
+            })
+        })
+
+    </script>
+}
+
 <h2>日志 - @Model.Date</h2>
 
 <table class="table">
     <tr>
-        <th>编号</th>
-        <th>行号</th>
-        <th>标题</th>
-        <th>时间</th>
+        <th width="100px">编号/行号</th>
+        <th width="120px">标题</th>
+        <th width="120px">时间</th>
         <th>线程</th>
         <th>类型</th>
         <th>是否异常</th>
-        <th width="30%">内容</th>
+        <th>内容</th>
     </tr>
     @{var i = 0;}
-@foreach (var item in Model.WeixinTraceItemList) {
-    <tr>
-        <td>
-            @(++i)
-        </td>
-        <td>@item.Line</td>
-        <td>@item.Title</td>
-        <td>@item.DateTime</td>
-        <td>@item.ThreadId</td>
-        <td>@item.weixinTraceType</td>
-        <td>@item.IsException</td>
-        <td>@item.Result.ToString()</td>
-    </tr>
-}
+    @foreach (var item in Model.WeixinTraceItemList)
+    {
+        <tr>
+            <td>
+                @(++i)/@item.Line
+            </td>
+            <td>@item.Title</td>
+            <td>@item.DateTime</td>
+            <td>@item.ThreadId</td>
+            <td>@item.weixinTraceType</td>
+            <td>@item.IsException</td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Result.Url))
+                {
+                    <p>
+                        <strong>URL：</strong>
+                        @item.Result.Url
+                    </p>
+                }
+
+                @if (!string.IsNullOrEmpty(item.Result.Result))
+                {
+                    <p>
+                        <strong>返回结果：</strong>
+                        @item.Result.Result
+                    </p>
+                }
+
+                <a href="javascript:;" id="more_@i" data-i="@i">点击查看完整结果</a>
+
+                <p id="detail_@i" class="detail_result">
+                    @Html.Raw(item.Result.ToString())
+                </p>
+            </td>
+        </tr>
+    }
 
 </table>
