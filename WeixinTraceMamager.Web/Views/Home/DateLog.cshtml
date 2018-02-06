@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "DataLog";
+    var exceptionCount = Model.WeixinTraceItemList.Count(z => z.IsException);
 }
 
 <style>
@@ -13,6 +14,15 @@
 
     table td {
         word-break: break-all;
+    }
+
+    .exception {
+        background: #fcc2c2;
+    }
+
+    .exceptionCount {
+        color: red;
+        font-weight: bold;
     }
 </style>
 
@@ -28,6 +38,10 @@
         function showAllDetails() {
             $('[id^=detail_').slideDown();
         }
+
+        function showExceptions() {
+            $('tr.exception').toggle();
+        }
     </script>
 }
 
@@ -36,6 +50,8 @@
 <p>
     @Html.ActionLink("<返回", "Index", null, new { @class = "btn btn-default" })
     <a href="javascript:;" onclick="showAllDetails()" class="btn btn-success">显示所有完整结果</a>
+    <a href="javascript:;" onclick="showExceptions()" class="btn btn-danger">显示所有异常信息</a>
+    异常信息：<span class="@(exceptionCount >0 ? "exceptionCount" : "")">@exceptionCount</span> 条
 </p>
 
 
@@ -52,7 +68,7 @@
     @{var i = 0;}
     @foreach (var item in Model.WeixinTraceItemList)
     {
-        <tr>
+        <tr class="@(item.IsException?"exception":"")">
             <td>
                 <strong>#@(++i)</strong> / @item.Line
             </td>
@@ -87,7 +103,7 @@
                 }
             </td>
         </tr>
-        <tr>
+        <tr class="@(item.IsException?"exception":"")">
             <td colspan="7">
                 <a href="javascript:;" id="more_@i" data-i="@i">#@i 点击查看完整结果</a>
 
