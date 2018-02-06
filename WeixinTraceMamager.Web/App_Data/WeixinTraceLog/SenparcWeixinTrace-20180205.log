@@ -2,7 +2,7 @@
 [[[接口调用]]]
 [2/5/2018 12:18:22 AM]
 [线程：9]
-    URL：https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxe273c3a02e09ff8c&secret=c01009e447d27e06e240c0ad539eeb91
+    URL：https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=AppIda02e09ff8c&secret=iwonttellyou
     Result：
 {"access_token":"6_ALV30nM7CgI4VSPpLmVMf4NaF3gFEFHOx7NkC-vEcvWUHxsTzWzhRBg0eXrEMLLFU3h4uG33g7eRdHG5ovVoKjxMBc7ASBzVXbP_BLeWTCs5WXllrRfr4t2YMN8Y-eogd5Zd0UFx1yubPG7TTSUgADAYXZ","expires_in":7200}
 
