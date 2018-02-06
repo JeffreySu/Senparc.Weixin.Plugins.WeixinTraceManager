@@ -24,7 +24,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
         public static List<string> GetLogDate()
         {
             var files = System.IO.Directory.GetFiles(DefaultLogPath, "*.log");
-            return files.Select(z => Path.GetFileNameWithoutExtension(z).Replace("SenparcWeixinTrace-", "")).ToList();
+            return files.Select(z => Path.GetFileNameWithoutExtension(z).Replace("SenparcWeixinTrace-", "")).OrderByDescending(z => z).ToList();
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     }
 
                     var timeRegex = Regex.Match(lineText, @"(?<=\[{1})([\s\S]{8,30})(?=\]{1})");
-                    if (timeRegex.Success)
+                    if (timeRegex.Success && string.IsNullOrEmpty(log.DateTime))
                     {
                         //时间
                         log.DateTime = timeRegex.Value;
@@ -175,6 +175,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
             System.IO.File.Delete(bakFilename);//删除备份文件
 
+            logList.Reverse();//翻转序列
             return logList;
         }
     }
