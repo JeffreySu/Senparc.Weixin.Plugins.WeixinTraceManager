@@ -20,6 +20,9 @@
         background: #fcc2c2;
     }
 
+    .not_exception {
+    }
+
     .exceptionCount {
         color: red;
         font-weight: bold;
@@ -41,25 +44,12 @@
 
         var justShowException = false;
         function showExceptions() {
-            $('#tbList tr').each(function (i, item) {
-                if (justShowException) {
-                    if ($(item).hasClass('exception')) {
-                        $(item).hide();
-                    } else {
-                        $(item).show();
-                    }
-                }
-                else {
-                    if ($(item).hasClass('exception')) {
-                        $(item).show();
-                    } else {
-                        $(item).hide();
-                    }
-                }
-
-                justShowException = !justShowException;
-
-            });
+            justShowException = !justShowException;
+            if (justShowException) {
+                $('tr.not_exception').hide();
+            } else {
+                $('tr.not_exception').show();
+            }
         }
     </script>
 }
@@ -84,16 +74,21 @@
         <th width="80px;">是否异常</th>
         <th>内容</th>
     </tr>
-    @{var i = 0;}
+    @{var i = Model.WeixinTraceItemList.Count;}
     @foreach (var item in Model.WeixinTraceItemList)
     {
         var showMessage = false;//是否有特殊消息输出
-        <tr class="@(item.IsException?"exception":"")">
+        <tr class="@(item.IsException?"exception":"not_exception")">
             <td>
-                <strong>#@(++i)</strong> / @item.Line
+                <strong>#@(i)</strong> / @item.Line
             </td>
             <td>@item.Title</td>
-            <td>@item.DateTime</td>
+            <td>
+                @if (item.DateTime != null)
+                {
+                    @Html.Raw(item.DateTime?.Replace(" ", "<br />"))
+                }
+            </td>
             <td>@item.ThreadId</td>
             <td>@item.weixinTraceType</td>
             <td>@item.IsException</td>
@@ -145,7 +140,7 @@
 
         if (showMessage)
         {
-            <tr class="@(item.IsException?"exception":"")">
+            <tr class="@(item.IsException?"exception":"not_exception")">
                 <td colspan="7">
                     <a href="javascript:;" id="more_@i" data-i="@i"><strong>#@i</strong> 点击查看完整结果</a>
 
@@ -156,6 +151,8 @@
                 </td>
             </tr>
         }
+
+        i--;
     }
 
 </table>
