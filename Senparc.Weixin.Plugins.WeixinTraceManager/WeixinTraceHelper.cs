@@ -49,7 +49,8 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
             {
                 string lineText = null;
                 int line = 0;
-                var readData = false;
+                var readPostData = false;
+                var readResult = false;
                 var readExceptionStackTrace = false;
 
                 WeixinTraceItem log = new WeixinTraceItem();
@@ -68,7 +69,8 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         log.Title = startRegex.Value;//记录标题
                         log.Line = line;
 
-                        readData = false;
+                        readPostData = false;
+                        readResult = false;
                         readExceptionStackTrace = false;
                         continue;
                     }
@@ -83,7 +85,8 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         log.IsException = true;
                         log.weixinTraceType = WeixinTraceType.Exception;
 
-                        readData = false;
+                        readPostData = false;
+                        readResult = false;
                         readExceptionStackTrace = false;
                         continue;
                     }
@@ -109,7 +112,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     //内容
                     log.Result.TotalResult += lineText + "\r\n";
 
-                    if (readData)
+                    if (readPostData)
                     {
                         log.Result.PostData += lineText += "\r\n";
                         continue;//一直读到底
@@ -124,13 +127,12 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     {
                         log.weixinTraceType = log.weixinTraceType | WeixinTraceType.PostRequest;//POST请求
 
-                        readData = true;
+                        readPostData = true;
                     }
-                    else if (lineText == "Result：")
+                    else if (lineText == "Result：" || readResult)
                     {
-                        log.Result.Result = lineText.Replace("Result：", "") + "\r\n";
-
-                        readData = true;
+                        log.Result.Result += lineText.Replace("Result：", "") + "\r\n";
+                        readResult = true;
                     }
                     else if (log.weixinTraceType != WeixinTraceType.PostRequest)
                     {
@@ -159,7 +161,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         }
                     }
 
-                    readData = true;
+                    readPostData = true;
                 }
             }
 
