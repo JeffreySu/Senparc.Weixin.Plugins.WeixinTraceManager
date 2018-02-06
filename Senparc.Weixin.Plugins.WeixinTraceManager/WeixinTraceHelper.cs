@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Senparc.Weixin.Helpers.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -61,12 +62,14 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     lineText = lineText.Trim();
 
 
-                    if (lineText == "[[[WeixinException]]]")
+                    var startExceptionRegex = Regex.Match(lineText, @"(?<=\[{3})(\S+)(?=Exception(\]{3}))");
+
+                    if (startExceptionRegex.Success)
                     {
                         //一个片段的开始（异常）
                         log = new WeixinTraceItem();
                         logList.Add(log);
-                        log.Title = "【WeixinException】";//记录标题
+                        log.Title = "【{0}Exception】异常！".FormatWith(startExceptionRegex.Value);//记录标题
                         log.Line = line;
                         log.IsException = true;
                         log.weixinTraceType = WeixinTraceType.Exception;
@@ -137,10 +140,11 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     {
                         log.Result.Result += lineText.Replace("Result：", "") + "\r\n";
                         readResult = true;
-                    }
-                    else if (log.weixinTraceType != WeixinTraceType.PostRequest)
-                    {
-                        log.weixinTraceType = log.weixinTraceType | WeixinTraceType.GetRequest;//GET请求
+
+                        if (log.weixinTraceType != WeixinTraceType.PostRequest)
+                        {
+                            log.weixinTraceType = log.weixinTraceType | WeixinTraceType.GetRequest;//GET请求
+                        }
                     }
 
                     if (log.IsException)
@@ -164,8 +168,6 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                             log.Result.ExceptionStackTrace = "\r\n" + lineText;
                         }
                     }
-
-                    readPostData = true;
                 }
             }
 
