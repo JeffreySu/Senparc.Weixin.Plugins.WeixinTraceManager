@@ -132,7 +132,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     }
                     else if (lineText == "Post Data：")
                     {
-                        log.weixinTraceType = log.weixinTraceType & WeixinTraceType.PostRequest;//POST请求
+                        log.weixinTraceType = log.weixinTraceType | WeixinTraceType.PostRequest;//POST请求
 
                         readPostData = true;
                     }
@@ -145,7 +145,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                             (int)(WeixinTraceType.GetRequest & log.weixinTraceType) != 0
                             )
                         {
-                            log.weixinTraceType = log.weixinTraceType & WeixinTraceType.GetRequest;//GET请求
+                            log.weixinTraceType = log.weixinTraceType | WeixinTraceType.GetRequest;//GET请求
                         }
                     }
 

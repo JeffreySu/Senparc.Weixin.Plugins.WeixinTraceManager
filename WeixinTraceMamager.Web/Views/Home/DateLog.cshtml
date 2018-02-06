@@ -96,7 +96,17 @@
                         @item.Result.Result
                     </p>
                 }
-              
+
+
+                @if (!string.IsNullOrEmpty(item.Result.PostData))
+                {
+                    showMessage = true;
+                    <p>
+                        <strong>Post 数据：</strong>
+                        @item.Result.PostData
+                    </p>
+                }
+
 
                 @if (item.IsException)
                 {
@@ -121,7 +131,7 @@
                     <a href="javascript:;" id="more_@i" data-i="@i"><strong>#@i</strong> 点击查看完整结果</a>
 
                     <p id="detail_@i" class="detail_result">
-                        @Html.Raw(item.Result.ToString())//显示所有结果
+                        @Html.Raw(item.Result.ToString())
                     </p>
 
                 </td>
