@@ -45,7 +45,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
             var logList = new List<WeixinTraceItem>();
 
-            using (StreamReader sr = new StreamReader(bakFilename, Encoding.Default))
+            using (StreamReader sr = new StreamReader(bakFilename, Encoding.UTF8))
             {
                 string lineText = null;
                 int line = 0;
@@ -95,7 +95,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         continue;
                     }
 
-                    var timeRegex = Regex.Match(lineText, @"(?<=\[{1})(\S+)(?=\]{1})");
+                    var timeRegex = Regex.Match(lineText, @"(?<=\[{1})([\s\S]{8,30})(?=\]{1})");
                     if (timeRegex.Success)
                     {
                         //时间

@@ -10,6 +10,10 @@ namespace WeixinTraceMamager.Web.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// 首页列表
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var vd = new Home_IndexVD()
@@ -19,28 +23,30 @@ namespace WeixinTraceMamager.Web.Controllers
 
             return View(vd);
         }
+
+        /// <summary>
+        /// 单天详情
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public ActionResult DateLog(string date)
         {
             var vd = new Home_DateLogVD()
             {
-                  WeixinTraceItemList = WeixinTraceHelper.GetAllLogs(date)
+                Date = date,
+                WeixinTraceItemList = WeixinTraceHelper.GetAllLogs(date)
             };
 
             return View(vd);
         }
 
-
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
