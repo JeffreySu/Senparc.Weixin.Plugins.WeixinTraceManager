@@ -126,6 +126,12 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
                         readData = true;
                     }
+                    else if (lineText == "Result：")
+                    {
+                        log.Result.Result = lineText.Replace("Result：", "") + "\r\n";
+
+                        readData = true;
+                    }
                     else if (log.weixinTraceType != WeixinTraceType.PostRequest)
                     {
                         log.weixinTraceType = log.weixinTraceType | WeixinTraceType.GetRequest;//GET请求

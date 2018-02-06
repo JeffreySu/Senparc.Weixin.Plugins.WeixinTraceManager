@@ -42,6 +42,9 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
     {
         public string AccessTokenOrAppId { get; set; }
         public string Url { get; set; }
+        /// <summary>
+        /// 返回结果，通常为JSON
+        /// </summary>
         public string Result { get; set; }
         public string PostData { get; set; }
         public string TotalResult { get; set; }
