@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var projectName = "WeixinTraceManager";
+    var company = "Senparc";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -32,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+            <p>&copy; @DateTime.Now.Year - @company - Senparc.Weixin.Plugins.@projectName</p>
         </footer>
     </div>
 

@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "关于"+ PluginConfig.PROJECT_NAME_CN;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
+<h3>源代码地址：<a href="@PluginConfig.PROJECT_SOURCE_URL" target="_blank">@PluginConfig.PROJECT_SOURCE_URL</a></h3>
 
-<p>Use this area to provide additional information.</p>
+<p>@PluginConfig.PROJECT_NAME 是一个用于提供微信日志管理的插件。</p>
