@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Senparc.Weixin.Plugins.WeixinTraceManager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WeixinTraceMamager.Web.Models;
 
 namespace WeixinTraceMamager.Web.Controllers
 {
@@ -10,8 +12,23 @@ namespace WeixinTraceMamager.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var vd = new Home_IndexVD()
+            {
+                DateList = WeixinTraceHelper.GetLogDate()
+            };
+
+            return View(vd);
         }
+        public ActionResult DateLog(string date)
+        {
+            var vd = new Home_DateLogVD()
+            {
+                  WeixinTraceItemList = WeixinTraceHelper.GetAllLogs(date)
+            };
+
+            return View(vd);
+        }
+
 
         public ActionResult About()
         {
