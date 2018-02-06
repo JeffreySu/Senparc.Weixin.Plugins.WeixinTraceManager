@@ -90,7 +90,9 @@
                 }
             </td>
             <td>@item.ThreadId</td>
-            <td>@item.weixinTraceType</td>
+            <td>
+                @item.weixinTraceType.ToString()
+            </td>
             <td>@item.IsException</td>
             <td>
                 @if (!string.IsNullOrEmpty(item.Result.Url))

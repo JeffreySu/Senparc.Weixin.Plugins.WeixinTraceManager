@@ -128,7 +128,12 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     if (lineText.StartsWith("URL："))
                     {
                         log.Result.Url = lineText.Replace("URL：", "");
-                        log.weixinTraceType = WeixinTraceType.API;
+
+                        if (WeixinTraceType.Normal ==  log.weixinTraceType)
+                        {
+                            log.weixinTraceType = WeixinTraceType.API;
+                        }
+                        //log.weixinTraceType = log.weixinTraceType | WeixinTraceType.API;
                     }
                     else if (lineText == "Post Data：")
                     {
@@ -140,11 +145,9 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         log.Result.Result += lineText.Replace("Result：", "") + "\r\n";
                         readResult = true;
 
-                        if ((int)(WeixinTraceType.PostRequest & log.weixinTraceType) == 0 &&
-                            (int)(WeixinTraceType.GetRequest & log.weixinTraceType) == 0
-                            )
+                        if (WeixinTraceType.PostRequest != log.weixinTraceType)
                         {
-                            log.weixinTraceType =  WeixinTraceType.GetRequest;//GET请求
+                            log.weixinTraceType = WeixinTraceType.GetRequest;//GET请求
                         }
                     }
 
