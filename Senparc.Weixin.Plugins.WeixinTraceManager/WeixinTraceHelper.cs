@@ -22,8 +22,8 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
         /// <returns></returns>
         public static List<string> GetLogDate()
         {
-            var dirs = System.IO.Directory.GetDirectories(DefaultLogPath);
-            return dirs.ToList();
+            var files = System.IO.Directory.GetFiles(DefaultLogPath, "*.log");
+            return files.Select(z => Path.GetFileNameWithoutExtension(z).Replace("SenparcWeixinTrace-", "")).ToList();
         }
 
         /// <summary>

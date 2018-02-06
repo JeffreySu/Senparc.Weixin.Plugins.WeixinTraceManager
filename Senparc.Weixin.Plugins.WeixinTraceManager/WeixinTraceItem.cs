@@ -50,5 +50,10 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
         public string ExceptionAccessTokenOrAppId { get; set; }
         public string ExceptionStackTrace { get; set; }
 
+        public override string ToString()
+        {
+            return TotalResult;
+        }
+
     }
 }
