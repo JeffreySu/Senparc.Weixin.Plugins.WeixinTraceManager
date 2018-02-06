@@ -154,9 +154,9 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         {
                             log.Result.ExceptionAccessTokenOrAppId = lineText.Replace("AccessTokenOrAppId：", "");
                         }
-                        else if (lineText.StartsWith("Message："))
+                        else if (lineText.StartsWith("Message：") || lineText.StartsWith("errcode："))
                         {
-                            log.Result.ExceptionMessage = lineText.Replace("Message：", "");
+                            log.Result.ExceptionMessage = lineText.Replace("Message：", "");//“errcode：”保留
                         }
                         else if (lineText.StartsWith("StackTrace："))
                         {
