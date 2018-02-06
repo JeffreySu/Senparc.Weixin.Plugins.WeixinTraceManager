@@ -60,7 +60,7 @@
     @Html.ActionLink("<返回", "Index", null, new { @class = "btn btn-default" })
     <a href="javascript:;" onclick="showAllDetails()" class="btn btn-success">显示所有完整结果</a>
     <a href="javascript:;" onclick="showExceptions()" class="btn btn-danger">只显示所有异常信息</a>
-    异常信息：<span class="@(exceptionCount >0 ? "exceptionCount" : "")">@exceptionCount</span> 条
+    异常信息：<span class="@(exceptionCount >0 ? "exceptionCount" : "")">@exceptionCount</span> / @Model.WeixinTraceItemList.Count 条
 </p>
 
 
