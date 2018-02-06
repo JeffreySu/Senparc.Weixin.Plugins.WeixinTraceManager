@@ -60,6 +60,24 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
                     lineText = lineText.Trim();
 
+
+                    if (lineText == "[[[WeixinException]]]")
+                    {
+                        //一个片段的开始（异常）
+                        log = new WeixinTraceItem();
+                        logList.Add(log);
+                        log.Title = "【WeixinException】";//记录标题
+                        log.Line = line;
+                        log.IsException = true;
+                        log.weixinTraceType = WeixinTraceType.Exception;
+
+                        readPostData = false;
+                        readResult = false;
+                        readExceptionStackTrace = false;
+                        continue;
+                    }
+
+                    //其他自定义类型
                     var startRegex = Regex.Match(lineText, @"(?<=\[{3})(\S+)(?=\]{3})");
                     if (startRegex.Success)
                     {
@@ -75,21 +93,6 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         continue;
                     }
 
-                    if (lineText == "[[WeixinException]]")
-                    {
-                        //一个片段的开始（异常）
-                        log = new WeixinTraceItem();
-                        logList.Add(log);
-                        log.Title = startRegex.Value;//记录标题
-                        log.Line = line;
-                        log.IsException = true;
-                        log.weixinTraceType = WeixinTraceType.Exception;
-
-                        readPostData = false;
-                        readResult = false;
-                        readExceptionStackTrace = false;
-                        continue;
-                    }
 
 
                     var threadRegex = Regex.Match(lineText, @"(?<=\[{1}线程：)(\d+)(?=\]{1})");
@@ -114,9 +117,10 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
                     if (readPostData)
                     {
-                        log.Result.PostData += lineText += "\r\n";
+                        log.Result.PostData += lineText + "\r\n";
                         continue;//一直读到底
                     }
+
 
                     if (lineText.StartsWith("URL："))
                     {
