@@ -3,3 +3,11 @@
 ################################################################################
 
 /WeixinTraceMamager.Web/bin
+/WeixinTraceMamager.Web/obj
+/WeixinTraceMamager.Web.Tests/bin/Debug
+/WeixinTraceMamager.Web.Tests/obj
+/Senparc.Weixin.Plugins.WeixinTraceManager/bin/Debug
+/Senparc.Weixin.Plugins.WeixinTraceManager/obj
+*.user
+/.vs
+/packages
