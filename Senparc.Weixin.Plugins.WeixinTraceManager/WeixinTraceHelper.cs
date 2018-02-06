@@ -57,6 +57,8 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                 {
                     line++;
 
+                    lineText = lineText.Trim();
+
                     var startRegex = Regex.Match(lineText, @"(?<=\[{3})(\S+)(?=\]{3})");
                     if (startRegex.Success)
                     {
@@ -113,12 +115,12 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                         continue;//一直读到底
                     }
 
-                    if (lineText.StartsWith("\tURL："))
+                    if (lineText.StartsWith("URL："))
                     {
-                        log.Result.Url = lineText.Replace("\tURL：", "");
+                        log.Result.Url = lineText.Replace("URL：", "");
                         log.weixinTraceType = WeixinTraceType.API;
                     }
-                    else if (lineText == "\tPost Data：")
+                    else if (lineText == "Post Data：")
                     {
                         log.weixinTraceType = log.weixinTraceType | WeixinTraceType.PostRequest;//POST请求
 
@@ -132,17 +134,17 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
                     if (log.IsException)
                     {
                         //异常信息处理
-                        if (lineText.StartsWith("\tAccessTokenOrAppId："))
+                        if (lineText.StartsWith("AccessTokenOrAppId："))
                         {
-                            log.Result.ExceptionAccessTokenOrAppId = lineText.Replace("\tAccessTokenOrAppId：", "");
+                            log.Result.ExceptionAccessTokenOrAppId = lineText.Replace("AccessTokenOrAppId：", "");
                         }
-                        else if (lineText.StartsWith("\tMessage："))
+                        else if (lineText.StartsWith("Message："))
                         {
-                            log.Result.ExceptionMessage = lineText.Replace("\tMessage：", "");
+                            log.Result.ExceptionMessage = lineText.Replace("Message：", "");
                         }
-                        else if (lineText.StartsWith("\tStackTrace："))
+                        else if (lineText.StartsWith("StackTrace："))
                         {
-                            log.Result.ExceptionStackTrace = lineText.Replace("\tStackTrace：", "");
+                            log.Result.ExceptionStackTrace = lineText.Replace("StackTrace：", "");
                             readExceptionStackTrace = true;
                         }
                         else if (readExceptionStackTrace)

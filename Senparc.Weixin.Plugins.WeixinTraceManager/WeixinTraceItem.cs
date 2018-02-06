@@ -52,7 +52,7 @@ namespace Senparc.Weixin.Plugins.WeixinTraceManager
 
         public override string ToString()
         {
-            return TotalResult;
+            return TotalResult.Replace("\r\n", "<br/>");
         }
 
     }
