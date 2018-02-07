@@ -1,7 +1,7 @@
 ﻿@model WeixinTraceMamager.Web.Models.Home_DateLogVD
 
 @{
-    ViewBag.Title = "DataLog";
+    ViewBag.Title = "日志 - " + @Model.Date;
     var exceptionCount = Model.WeixinTraceItemList.Count(z => z.IsException);
 }
 
@@ -55,7 +55,7 @@
 }
 
 
-<h2>日志 - @Model.Date</h2>
+<h2>@ViewBag.Title</h2>
 <p>
     @Html.ActionLink("<返回", "Index", null, new { @class = "btn btn-default" })
     <a href="javascript:;" onclick="showAllDetails()" class="btn btn-success">显示所有完整结果</a>
